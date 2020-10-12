@@ -44,20 +44,19 @@ export const GameScreen = ({location, history}) => {
             }
         }
 
+        setRoundsComplete(roundsComplete+1);
         reset();
     }
+    
 
     useEffect(() => {
         if (roundsMax === roundsComplete) {
             setWinnerGame(game._id, rounds, player1, player2)
-                .then( resp => {
-                    history.push('/finish', resp.winner)
-                });
-        } else {
-            setRoundsComplete(roundsComplete+1);
+            .then( resp => {
+                history.push('/finish', resp.winner)
+            });
         }
-
-    }, [rounds])
+    }, [rounds, game, player1, player2, history, roundsMax, roundsComplete])
 
     return (
         <div className="container pt-5">
