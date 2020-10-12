@@ -60,78 +60,81 @@ export const GameScreen = ({location, history}) => {
     }, [rounds])
 
     return (
-        <div className="container mt-5 row" >
+        <div className="container pt-5">
 
-            <div className="col-6">
-                <h1 className="d-flex justify-content-center">Round {rounds.length +1}</h1>
-                <hr />
+            <div className="row d-flex justify-content-center" >
 
-                { loading && <p className="animate__animated animate__flash">Loading...</p> }
+                <div className="col-6">
+                    <h1 className="d-flex justify-content-center">Round {rounds.length +1}</h1>
+                    <hr />
 
-                <div className="d-flex align-items-center justify-content-center">
-                    { !player1move ?  player1.name :player2.name }
+                    { loading && <p className="animate__animated animate__flash">Loading...</p> }
+
+                    <div className="d-flex align-items-center justify-content-center">
+                        { !player1move ?  player1.name :player2.name }
+                    </div>
+
+                    <form onSubmit={ handleSubmit }>
+                        {
+                            !player1move 
+                            && 
+                            <div className="form-group">
+                                <label>Select Move</label>
+                                <select 
+                                    className="form-control" 
+                                    name="player1move"
+                                    value={ player1move }
+                                    onChange={ handleInputChange }
+                                >
+                                    <option value={false}>Select...</option>
+                                    {
+                                        moves &&
+                                        moves.map( move => {
+                                            return <option key={ move._id }> { move.move }</option>
+                                        })
+                                    }
+                                </select>
+                            </div>
+                        }
+
+                        {
+                            player1move 
+                            && 
+                            <div className="form-group">
+                                <label>Select Move</label>
+                                <select 
+                                    className="form-control" 
+                                    name="player2move"
+                                    value={ player2move }
+                                    onChange={ handleInputChange }
+                                >
+                                    <option  >Select...</option>
+
+                                    {
+                                        moves &&
+                                        moves.map( move => {
+                                            return <option key={ move._id }> { move.move }</option>
+                                        })
+                                    }
+                                </select>
+                            </div>
+                        }
+                        <button 
+                            type="submit" 
+                            className="btn btn-primary btn-block"
+                            disabled={ !player1move || !player2move }    
+                        >
+                            Ok
+                        </button>
+                    </form>
+                </div>
+                <div className="col-6">
+                        <ScoreComponent rounds={rounds}/>
                 </div>
 
-                <form onSubmit={ handleSubmit }>
-                    {
-                        !player1move 
-                        && 
-                        <div className="form-group">
-                            <label>Select Move</label>
-                            <select 
-                                className="form-control" 
-                                name="player1move"
-                                value={ player1move }
-                                onChange={ handleInputChange }
-                            >
-                                <option value={false}>Select...</option>
-                                {
-                                    moves &&
-                                    moves.map( move => {
-                                        return <option key={ move._id }> { move.move }</option>
-                                    })
-                                }
-                            </select>
-                        </div>
-                    }
+                
 
-                    {
-                        player1move 
-                        && 
-                        <div className="form-group">
-                            <label>Select Move</label>
-                            <select 
-                                className="form-control" 
-                                name="player2move"
-                                value={ player2move }
-                                onChange={ handleInputChange }
-                            >
-                                <option  >Select...</option>
-
-                                {
-                                    moves &&
-                                    moves.map( move => {
-                                        return <option key={ move._id }> { move.move }</option>
-                                    })
-                                }
-                            </select>
-                        </div>
-                    }
-                    <button 
-                        type="submit" 
-                        className="btn btn-primary btn-block"
-                        disabled={ !player1move || !player2move }    
-                    >
-                        Ok
-                    </button>
-                </form>
             </div>
-            <div className="col-6">
-                    <ScoreComponent rounds={rounds}/>
-            </div>
-
-            
-
         </div>
     )
 }

@@ -49,7 +49,7 @@ export const StartScreen = ({ history }) => {
                         onChange={ handleInputChange }
                     />
                 </div>
-                <button type="submit" className="btn btn-primary">START</button>
+                <button type="submit" className="btn btn-primary" disabled={ !player1 || !player2 }>START</button>
             </form>
         </div>
     )
